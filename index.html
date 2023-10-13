@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Watch</title>
+    <style>
+.myWatch{
+            margin: auto;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: rgb(230, 227, 227);
+            width: 35%;
+            padding:10px;
+            height: 72px;
+            line-height: 72px;
+            text-align: center;
+            top: 50%;
+            left: 34%;
+            position: absolute;
+            border-radius: 7px;
+        }
+        @media  (max-width: 400px){
+            body{
+                background: rgb(235, 215, 215);
+            }
+            .myWatch{
+                background-color: rgb(245, 147, 128);
+                width: 60%;
+                left: 17%;
+            }
+
+        }
+        @media  (max-width: 900px)and (min-width: 401px){
+            .myWatch{
+                background-color: lightcoral;
+                width: 54%;
+                left: 22%;
+            }
+            body{
+                background: lightseagreen;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="myWatch">
+        <span class="H"></span>
+        <span class="M"></span>
+        <span class="date"></span>
+    </div>
+
+    <script>
+        function myTime(){
+            var myDate = new Date ();
+            var hr, min = (myDate.getMinutes() < 10) ? "0" + myDate.getMinutes() : myDate.getMinutes()
+                sec = (myDate.getSeconds() < 10) ? "0" + myDate.getSeconds() : myDate.getSeconds()
+                M = (myDate.getHours() <=12) ? "PM" : "AM";
+
+                if(myDate.getHours() == 0){
+            hr = 12;
+        }
+        else if (myDate.getHours() > 12){
+            hr = myDate.getHours() -12;
+        }
+        else{
+            hr = myDate.getHours();
+        }
+
+        var currentTime = hr + ":" + min + ":" + sec + ":";
+
+            document.getElementsByClassName("H")[0].innerHTML = currentTime;
+            document.getElementsByClassName("M") [0].innerHTML = M;
+            // document.getElementsByClassName('date')[0].innerHTML = date;
+
+
+            var myDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                myMonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                day = myDate.getDate();
+
+        var currentDate = " " + myDay[myDate.getDay()] + ", " + myMonth[myDate.getMonth()] + " " + day;
+            document.getElementsByClassName("date")[0].innerHTML = currentDate;
+        }
+        myTime();
+        setInterval(function(){
+            myTime();
+        }, 1000);
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
